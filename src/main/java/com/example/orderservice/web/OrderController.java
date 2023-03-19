@@ -22,7 +22,7 @@ public class OrderController {
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    private OrderDetails createOrder(@RequestBody OrderModel orderModel){
+    private OrderDetails createOrder(@RequestBody OrderModel orderModel) throws IllegalAccessException {
         return orderService.createOrder(orderModel);
     }
 
