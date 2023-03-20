@@ -7,6 +7,7 @@ import com.example.orderservice.domain.entities.Orders;
 import com.example.orderservice.domain.mappers.OrderMapper;
 import com.example.orderservice.domain.repository.OrderRepository;
 import com.sun.xml.bind.v2.TODO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@Slf4j
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -43,7 +45,7 @@ public class OrderService {
                 .retrieve()
                 .bodyToMono(InventoryResponse[].class)
                 .block();
-        boolean allProductInStock = Arrays.stream(resultFromInventoryService).allMatch(inventoryResponse -> inventoryResponse.getIsInStock());
+        boolean allProductInStock = Arrays.stream(resultFromInventoryService).allMatch(InventoryResponse::getIsInStock);
 
         OrderDetails orderDetails = new OrderDetails();
         if(allProductInStock){
@@ -53,7 +55,7 @@ public class OrderService {
         }else{
             throw new IllegalAccessException("Product is not in the stock");
         }
-
+        log.info("Order placed successfully");
         return orderDetails;
     }
 
