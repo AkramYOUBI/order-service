@@ -15,6 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<spring-cloud.version>2021.0.6</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -55,10 +56,10 @@
 			<artifactId>mapstruct-processor</artifactId>
 			<version>1.5.3.Final</version>
 		</dependency>
-		<!--Eureka_SpringCloud-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<version>3.1.4</version>
 		</dependency>
 	</dependencies>
 
