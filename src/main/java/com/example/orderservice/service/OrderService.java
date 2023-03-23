@@ -24,12 +24,12 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
-    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper, WebClient webClient) {
+    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper, WebClient.Builder webClientBuilder) {
         this.orderRepository = orderRepository;
         this.orderMapper = orderMapper;
-        this.webClient = webClient;
+        this.webClientBuilder = webClientBuilder;
     }
 
 
@@ -39,8 +39,8 @@ public class OrderService {
         // Todo: check the out quantity product and update the names for better understanding
 
         //Verify if this item is in the database of inventoryService
-        InventoryResponse[] resultFromInventoryService = webClient.get()
-                .uri("http://localhost:8083/api/inventory",
+        InventoryResponse[] resultFromInventoryService = webClientBuilder.build().get()
+                .uri("http://inventory-service/api/inventory",
                         uriBuilder -> uriBuilder.queryParam("skuCode", itemSkuCode).build())
                 .retrieve()
                 .bodyToMono(InventoryResponse[].class)
